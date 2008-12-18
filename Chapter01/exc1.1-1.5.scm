@@ -18,15 +18,15 @@
 
 ;; Exercise 1.3
 
-(def (square x) (* x x))
-(def (poly x y) (+ (square x) (square y)))
-(def (fun x y z)
+(define (square x) (* x x))
+(define (poly x y) (+ (square x) (square y)))
+(define (fun x y z)
      (if (< x y) (if (< x z) (poly y z)
                    (poly x y))
        (if (> y z) (poly x y)
          (poly x z))
        ))
-;: (def (fun2 x y z)
+;: (define (fun2 x y z)
 (fun 3 4 5)
 
 ;; Exercise 1.4
