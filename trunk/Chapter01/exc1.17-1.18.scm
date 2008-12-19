@@ -1,5 +1,6 @@
 #lang scheme
-;;Exercise 1.17
+
+;;Exercise 1.17 and 1.18
 
 (define (even? x) (= (remainder x 2) 0))
 (define (double x) (+ x x))
