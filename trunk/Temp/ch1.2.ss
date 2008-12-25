@@ -11,7 +11,7 @@
 (define (fib2 n)
   (fib-iter 1 0 n))
 (define (fib-iter x y count)
-  (if (= count 0) 0
+  (if (= count 0) y
       (fib-iter (+ x y) x (- count 1))))
 
 (define (count-change amount)
