@@ -27,17 +27,24 @@
 
 ;; checking the primality of an integer n
 ;; with "searching for divisors" algorithm.
-(define (prime? n)
+(define (fast-prime? n times)
   (define (square x) (* x x))
-  (define (smallest-divisor n)
-    (find-divisor n 2))
-  (define (find-divisor n test-divisor)
-    (cond ((> (square test-divisor) n) n)
-          ((divides? test-divisor n) test-divisor)
-          (else (find-divisor n (+ test-divisor 1)))))
-  (define (divides? a b)
-    (= (remainder b a) 0))
-  (= n (smallest-divisor n)))
+  (define (expmod base exp m)
+    (cond ((= exp 0) 1)
+          ((even? exp)
+           (remainder (square (expmod base (/ exp 2) m))
+                      m))
+          (else
+           (remainder (* base (expmod base (- exp 1) m))
+                      m))))
+  (define (fermat-test n)
+    (define (try-it a)
+      (= (expmod a n n) a))
+    (try-it (+ 1 (random (- n 1)))))
+  
+  (cond ((= times 0) true)
+        ((fermat-test n) (fast-prime? n (- times 1)))
+        (else false)))
 
 (define (runtime) (current-time))
 
@@ -45,7 +52,7 @@
   (define (start-prime-test n start-time)
     (newline)
     (display n)
-    (if (prime? n)
+    (if (fast-prime? n 10)
         (report-prime (time-difference (runtime) start-time))
         #f))
   (start-prime-test n (runtime)))
@@ -84,6 +91,6 @@
   (define (test-iter num count start-time)
     (cond ((= count 0)
            (test-report num start-time))
-          ((prime? num) (test-iter num (- count 1) start-time))
+          ((fast-prime? num 10) (test-iter num (- count 1) start-time))
           (else (test-iter num (- count 1) start-time))))
   (test-iter (search-for-primes start-num 1) times-count (runtime)))
