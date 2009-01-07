@@ -24,8 +24,40 @@
   (define (ft-iter a)
     ;(newline)
     ;(display a)
-    (cond ((>= a (cond ((even? n) (/ n 2)) (else (/ (+ n 1) 2)))) #t)
+    (cond ((> a (cond ((even? n) (/ n 2))
+                       (else (/ (- n 1) 2)))) #t)
           ((try-it a) (ft-iter (+ a 1)))
           (else #f)))
   
   (ft-iter 2))
+
+
+;
+; test
+;
+(display "normal\n")
+(miller-rabin-full-test 2)
+(miller-rabin-full-test 3)
+(miller-rabin-full-test 4)
+(miller-rabin-full-test 5)
+(miller-rabin-full-test 6)
+(miller-rabin-full-test 7)
+(miller-rabin-full-test 8)
+(miller-rabin-full-test 9)
+(miller-rabin-full-test 10)
+(miller-rabin-full-test 11)
+(miller-rabin-full-test 121) ;#f
+(miller-rabin-full-test 131) ;#t
+; Camicheal Numbers
+(display "Camicheal Numbers\n")
+(miller-rabin-full-test 5610)
+(miller-rabin-full-test 1105)
+(miller-rabin-full-test 1729)
+(miller-rabin-full-test 2465)
+(miller-rabin-full-test 2821)
+(miller-rabin-full-test 6601)
+; Big Prime Numbers
+(display "Big Prime Numbers\n")
+(miller-rabin-full-test 100019)
+(miller-rabin-full-test 100043)
+(miller-rabin-full-test 1000033)
